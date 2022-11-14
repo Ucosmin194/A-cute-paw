@@ -1,0 +1,132 @@
+<style>
+
+    .font {
+        font-family: 'Cookie', cursive;
+    }
+
+    .font-tabs {
+
+        font-family: 'El Messiri', sans-serif;
+    }
+</style>
+
+<header class="py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <a href="{% url 'home' %}"
+           class="d-flex align-items-center mb-2 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <span class="material-symbols-outlined" style="width: 35px; height: 25px">pets</span>
+            <span class="fs-1 font">A Cute Paw |<i class="fs-6 font-monospace fw-light"> find your new best friend </i></span>
+        </a>
+
+    </div>
+</header>
+<nav class="py-2 bg-light border-bottom font-tabs">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto fs-6">
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link link-dark px-2 active" aria-current="page">Home</a>
+            </li>
+
+            {# Cat and dog navbar #}
+
+            {% for specie in navbar_species %}
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">{{ specie.name_plural }}</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item"
+                               href="{% url 'list_pets' %}?species={{ specie.id }}">{{ specie.name }} Adoption</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'all_posts' %}?specie={{ specie.id }}">{{ specie.name }} Care</a></li>
+                    </ul>
+                </li>
+            {% endfor %}
+
+            {# Other Animals #}
+
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                   data-bs-auto-close="outside"
+                   data-bs-toggle="dropdown" aria-expanded="false">Other Animals</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Adopt Pet &raquo;
+                        </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            {% for specie in navbar_species_secondary %}
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{% url 'list_pets' %}?species={{ specie.id }}">Adopt {{ specie.name_plural }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Pet Care &raquo;
+                        </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            {% for specie in navbar_species_secondary %}
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{% url 'all_posts' %}?specie={{ specie.id }}">{{ specie.name_plural }}
+                                        Care</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            {# Pet Care, Offer Adoption #}
+            <li class="nav-item"><a href="{% url 'list_pets' %}" class="nav-link link-dark px-2">All Pets </a></li>
+            <li class="nav-item"><a href="{% url 'all_posts' %}" class="nav-link link-dark px-2">Pet Care </a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'offer_for_adoption' %}" class="nav-link link-dark px-2">Offer A
+                    Pet For Adoption </a></li>
+            {% else %}
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2">Offer a pet
+                    for adoption </a></li>
+            {% endif %}
+        </ul>
+
+        {# User profile #}
+
+        <ul class="nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item px-2">
+                    <a class="nav-link dropdown-toggle text-dark" href="#"
+                       id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if user.file %}
+                            <img src="{{ user.file.url }}" alt="user picture" width="42" height="42"
+                                 class="rounded-circle" style="object-fit: cover">
+                        {% else %}
+                            <img src="../static/image/owner_profile/icon.jpg"
+                                 alt="user picture" width="42" height="42" class="rounded-circle"
+                                 style="object-fit: cover">
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item"
+                               href="{% url 'owner_profile' user.id %}">Account Info</a></li>
+                        <li><a class="dropdown-item" href="{% url 'adoption_request' %}">Adoption Request</a></li>
+                        <li>
+                        <li><a class="dropdown-item" href="{% url 'favourite' %}">Favourite Pets</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </li>
+
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2">Login</a></li>
+                <li class="nav-item"><a href="{% url 'owner_form' %}" class="nav-link link-dark px-2">Sign up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+

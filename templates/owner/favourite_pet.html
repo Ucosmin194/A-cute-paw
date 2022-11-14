@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} Your favourite pets{% endblock %}
+{% block content %}
+    <div class="container bg-light bg-opacity-50 pb-5 py-5 font-tabs"><br>
+        <h2 class="d-flex justify-content-center pb-5"> Your favourite pets:</h2>
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 col-12 ">
+                <div class="row ">
+                    {% if favourite %}
+                        {% for pet in favourite %}
+                            <div class="col-lg-4 col-12">
+                                <a href="{% url 'detail_pet' pet.id %} "
+                                   style="color: black; text-decoration: none">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-body">
+                                        <div><input type="hidden" name="favourite_id" value="{{ favourite_pet.id }}">
+                                            <img src="{{ pet.file.url }}" alt="..."  width="100%" height="250px"
+                                                 style="object-fit: cover">
+                                                <h4 class="d-flex justify-content-center">{{ pet.name }}</h4>
+                                                <div class="card-footer bg-transparent text-center">
+                                                    <a type="button" class="btn btn-outline-danger"
+                                                       href="{% url 'favourite_pet' pet.id %}">Remove from favourites</a>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                        </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <h3 class="d-flex justify-content-center pb-5">No pets added as favourites</h3>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

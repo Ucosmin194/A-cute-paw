@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Login page {% endblock %}
+{% block content %}
+    <section class="text-center">
+
+        <div class="p-5 bg-image" style="
+        background-image: url('../../static/image/login1.jpg');
+        height: 300px;
+        "></div>
+
+        <div class="card mx-4 mx-md-5 shadow-5-strong mb-5" style="
+        margin-top: -100px;
+        background: hsla(0, 0%, 100%, 0.8);
+        backdrop-filter: blur(30px);
+        ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="card my-5">
+                            <div class="card-header">
+                                <h3 class="text-center my-5">Welcome back,</h3>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="card-footer text-center bg-transparent">
+                                        <button type="submit" class="btn btn-dark">Login</button>
+                                        <a href="{% url 'password_reset' %}" class="btn btn-outline-dark">Reset
+                                            password</a>
+                                        <p class="mt-3"> Don't have an account? <br><a href="{% url 'owner_form' %}" class="text-dark">Sign up</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
