@@ -6,3 +6,4 @@ django_import_export==2.8.0
 django_widget_tweaks==1.4.12
 django_ckeditor==6.5
 Pillow==9.3.0
+django-filter==22.1
